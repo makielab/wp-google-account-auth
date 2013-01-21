@@ -4,7 +4,7 @@ Donate link:
 Tags: authentication, permissions, email, google, apps, gmail
 Requires at least: 2.7.0
 Tested up to: 3.4.2
-Stable tag: 0.2.3
+Stable tag: 0.0.1
 
 WP Google Account Auth is a wordpress plugin that allows wordpress to authenticate against a google account.
 
