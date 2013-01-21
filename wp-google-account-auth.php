@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Google Account Auth
 Version: 0.0.1
-Plugin URI: http://github.com/lpetre/wp-google-account-auth
+Plugin URI: http://github.com/makielab/wp-google-account-auth
 Description: WP Google Account Auth is a wordpress plugin that allows wordpress to authenticate against a google account.
 Author: Luke Petre
 Author URI: http://github.com/lpetre
