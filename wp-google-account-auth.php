@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Google Account Auth
-Version: 0.0.1
+Version: 0.0.2
 Plugin URI: http://github.com/makielab/wp-google-account-auth
 Description: WP Google Account Auth is a wordpress plugin that allows wordpress to authenticate against a google account.
 Author: Luke Petre
@@ -78,7 +78,7 @@ function googleaccount_debug($msg) {
  * Add style and script to login page.
  */
 function googleaccount_wp_login_head() {
-	echo '<link rel="stylesheet" href="'.plugins_url('wp-google-account-auth/auth-buttons.css').'"><style>
+	echo '<link rel="stylesheet" href="'.plugins_url('auth-buttons.css', __FILE__).'"><style>
 		label[for=user_login], label[for=user_pass] { display: none; } 
 		#user_login, #user_pass, .submit, .forgetmenot, #nav { display: none; }
 		</style>';
