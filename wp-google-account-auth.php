@@ -13,7 +13,6 @@ add_action( 'login_head', 'googleaccount_wp_login_head');
 add_action( 'login_form', 'googleaccount_wp_login_form');
 add_action( 'authenticate', 'googleaccount_authenticate' );
 
-
 /**
  * Authenticate user to WordPress using OpenID.
  *
@@ -25,36 +24,32 @@ function googleaccount_authenticate($user) {
 	{
 		$url = get_option('siteurl') . '/wp-login.php';
 
-    	$openid = new LightOpenID($url);
-	    if(!$openid->mode) {
-	    	$openid->realm = get_option('siteurl');
-	    	$openid->returnUrl = add_query_arg( array( 
+		$openid = new LightOpenID($url);
+		if(!$openid->mode) {
+			$openid->realm = get_option('siteurl');
+			$openid->returnUrl = add_query_arg( array(
 				'googleaccount_login' => 1,
-				'googleaccount_nonce' => wp_create_nonce('googleaccount_' . md5($url)), 
+				'googleaccount_nonce' => wp_create_nonce('googleaccount_' . md5($url)),
 				'redirect_to' => array_key_exists('redirect_to', $_REQUEST) ? $_REQUEST['redirect_to'] : null,
 				), $url);
-	    	$openid->required = array('contact/email');
-	        $openid->identity = 'https://www.google.com/accounts/o8/id';
-	        wp_redirect($openid->authUrl());
-	        exit;
-	    }
-	    elseif($openid->mode == 'cancel') 
-	    {
+			$openid->required = array('contact/email');
+			$openid->identity = 'https://www.google.com/accounts/o8/id';
+			wp_redirect($openid->authUrl());
+			exit;
+		}
+		elseif($openid->mode == 'cancel'){
 			return new WP_Error( 'googleaccount_login_error', 'User has canceled authentication!' );
-	    }
-	    elseif(!$openid->validate())
-	    {
+		}
+		elseif(!$openid->validate()) {
 			return new WP_Error( 'googleaccount_login_error', 'User has not logged in.' );
-	    }
-		elseif(!wp_verify_nonce($_REQUEST['googleaccount_nonce'], 'googleaccount_' . md5($url)))
-		{
+		}
+		elseif(!wp_verify_nonce($_REQUEST['googleaccount_nonce'], 'googleaccount_' . md5($url))) {
 			return new WP_Error('googleaccount_login_error', 'Error during OpenID authentication.  Please try again. (invalid nonce)');
 		}
 
-	   	$attr = $openid->getAttributes();
-	   	$found_user = get_user_by('email', $attr['contact/email']);
-	   	if ( !$found_user ) 
-	   	{
+		$attr = $openid->getAttributes();
+		$found_user = get_user_by('email', $attr['contact/email']);
+		if ( !$found_user ) {
 			return new WP_Error('googleaccount_login_error', __('<strong>ERROR</strong>: No user with that email address: ....'));
 		}
 
@@ -79,7 +74,7 @@ function googleaccount_debug($msg) {
  */
 function googleaccount_wp_login_head() {
 	echo '<link rel="stylesheet" href="'.plugins_url('auth-buttons.css', __FILE__).'"><style>
-		label[for=user_login], label[for=user_pass] { display: none; } 
+		label[for=user_login], label[for=user_pass] { display: none; }
 		#user_login, #user_pass, .submit, .forgetmenot, #nav { display: none; }
 		</style>';
 }
